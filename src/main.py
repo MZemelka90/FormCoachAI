@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 from MovementPatterns import SquatPose
-from Calculations import calculate_angle
+from Calculations import calculate_three_point_angle, calculate_two_point_angle
 from MovementDrawings import SquatDrawings
 
 # Initialize Mediapipe Pose
@@ -10,7 +10,8 @@ pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
 # Open video feed (0 for webcam or provide video file path)
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Side_2.mp4")
+cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Video_Back.mp4")
 
 # Get the video resolution
 video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -54,13 +55,16 @@ while cap.isOpened():
             hip, knee, ankle, shoulder, feet = squat_pose.get_side_coordinates("Right")
 
         # Calculate the angles
-        knee_angle = calculate_angle(hip, knee, ankle)
-        hip_angle = calculate_angle(shoulder, hip, knee)
-        shin_angle = calculate_angle(knee, ankle, feet)
+        knee_angle = calculate_three_point_angle(hip, knee, ankle)
+        hip_angle = calculate_three_point_angle(shoulder, hip, knee)
+        shin_angle = calculate_three_point_angle(knee, ankle, feet)
         squat_drawings.draw_side_angle_squat(video_angle, hip, knee, ankle, shoulder, knee_angle, hip_angle, shin_angle)
 
     elif video_angle == "Back Angle":
-        pass
+        shoulders = squat_pose.shoulders
+        hips = squat_pose.hips
+        squat_drawings.draw_back_angle_squat(video_angle, shoulders=shoulders, hips=hips)
+
     # Display the image
     cv2.imshow('FormCoachAI', image)
 

@@ -1,7 +1,8 @@
 import numpy as np
+import math
 
 
-def calculate_angle(a: list, b: list, c: list) -> float:
+def calculate_three_point_angle(a: list, b: list, c: list) -> float:
     """
     Calculate the angle between three points.
 
@@ -21,3 +22,16 @@ def calculate_angle(a: list, b: list, c: list) -> float:
         angle = 360 - angle
 
     return angle
+
+
+def calculate_two_point_angle(a, b):
+    # Differences
+    delta_x = b[0] - a[0]
+    delta_y = b[1] - a[1]
+
+    # Angle in radians
+    angle_radians = math.atan2(delta_y, delta_x)
+
+    # Convert to degrees
+    angle_degrees = math.degrees(angle_radians)
+    return round(angle_degrees)

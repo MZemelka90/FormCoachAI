@@ -103,6 +103,8 @@ class SquatDrawings:
                               camera_angle: str,
                               hips: tuple,
                               shoulders: tuple,
+                              hip_angle: float,
+                              hip_shift_angle: float
                               ):
         cv2.putText(self.image,
                     f"Camera Angle: {camera_angle}",
@@ -140,11 +142,6 @@ class SquatDrawings:
         cv2.drawMarker(self.image, hip_middle, (0, 0, 255), markerType=cv2.MARKER_SQUARE, markerSize=10, thickness=2)
         cv2.drawMarker(self.image, shoulder_middle, (0, 0, 255), markerType=cv2.MARKER_SQUARE, markerSize=10, thickness=2)
 
-        hip_angle = calculate_two_point_angle(
-            (int(hips[0].x * self.width), int(hips[0].y * self.height)),
-            (int(hips[1].x * self.width), int(hips[1].y * self.height))
-        )
-        hip_shift_angle = calculate_two_point_angle(shoulder_middle, hip_middle)
         cv2.putText(self.image,
                     f"Hip horiz. Angle: {hip_angle} deg",
                     (hip_middle[0] - 100, hip_middle[1] + 50),

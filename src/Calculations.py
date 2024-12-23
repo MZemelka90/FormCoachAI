@@ -35,3 +35,7 @@ def calculate_two_point_angle(a, b):
     # Convert to degrees
     angle_degrees = math.degrees(angle_radians)
     return round(angle_degrees)
+
+
+def calculate_distance(a, b):
+    return abs(math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2))

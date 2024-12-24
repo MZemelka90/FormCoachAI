@@ -8,6 +8,9 @@ mp_pose = mp.solutions.pose
 
 @dataclass
 class JointCoordinates:
+    """
+    Dataclass to store joint coordinates
+    """
     left_shoulder: List
     right_shoulder: List
     left_hip: List
@@ -135,18 +138,18 @@ class SquatPose:
     def check_which_side_is_visible(self) -> str:
         """Check which side is visible"""
         right_side_joints = [
-            self.landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
-            self.landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
-            self.landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value],
-            self.landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value],
-            self.landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value]
+            self.shoulders[1],
+            self.hips[1],
+            self.elbows[1],
+            self.knees[1],
+            self.ankles[1]
         ]
         left_side_joints = [
-            self.landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
-            self.landmarks[mp_pose.PoseLandmark.LEFT_HIP.value],
-            self.landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
-            self.landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value],
-            self.landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value]
+            self.shoulders[0],
+            self.hips[0],
+            self.elbows[0],
+            self.knees[0],
+            self.ankles[0]
         ]
         right_side_visibility = sum(joint.visibility for joint in right_side_joints)
         left_side_visibility = sum(joint.visibility for joint in left_side_joints)
@@ -169,14 +172,18 @@ class SquatPose:
             tuple: The coordinates of the hip, knee, and ankle
         """
         if side == "Left":
-            index = 0
+            return (self.coordinates.left_hip,
+                    self.coordinates.left_knee,
+                    self.coordinates.left_ankle,
+                    self.coordinates.left_shoulder,
+                    self.coordinates.left_foot,
+                    self.coordinates.left_heel)
         elif side == "Right":
-            index = 1
+            return (self.coordinates.right_hip,
+                    self.coordinates.right_knee,
+                    self.coordinates.right_ankle,
+                    self.coordinates.right_shoulder,
+                    self.coordinates.right_foot,
+                    self.coordinates.right_heel)
         else:
             raise ValueError("Invalid side")
-
-        return ([getattr(self.hips[index], coord) for coord in ['x', 'y']],
-                [getattr(self.knees[index], coord) for coord in ['x', 'y']],
-                [getattr(self.ankles[index], coord) for coord in ['x', 'y']],
-                [getattr(self.shoulders[index], coord) for coord in ['x', 'y']],
-                [getattr(self.feet[index], coord) for coord in ['x', 'y']])

@@ -12,8 +12,8 @@ pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
 # Open video feed (0 for webcam or provide video file path)
-# cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Side_2.mp4")
-cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Video_Back.mp4")
+cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Side_2.mp4")
+# cap = cv2.VideoCapture(r"C:\Users\Lenovo\OneDrive\Dokumente\FormCoachAI\Data\Squat_Test_Video_Back.mp4")
 
 # Get the video resolution
 video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -50,10 +50,10 @@ while cap.isOpened():
     if video_angle == "Side Angle":
         filmed_side = squat_pose.check_which_side_is_visible()
         if filmed_side == "Left":
-            hip, knee, ankle, shoulder, feet = squat_pose.get_side_coordinates("Left")
+            hip, knee, ankle, shoulder, feet, heel = squat_pose.get_side_coordinates("Left")
 
         else:
-            hip, knee, ankle, shoulder, feet = squat_pose.get_side_coordinates("Right")
+            hip, knee, ankle, shoulder, feet, heel = squat_pose.get_side_coordinates("Right")
 
         # Calculate the angles
         knee_angle = calculate_three_point_angle(hip, knee, ankle)

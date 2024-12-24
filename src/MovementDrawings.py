@@ -1,5 +1,14 @@
 import cv2
-from Calculations import calculate_two_point_angle
+
+COLORS = {
+    "red": (0, 0, 255),
+    "green": (0, 255, 0),
+    "blue": (255, 0, 0),
+    "yellow": (0, 255, 255),
+    "white": (255, 255, 255),
+    "black": (0, 0, 0),
+    "gray": (128, 128, 128)
+}
 
 
 class SquatDrawings:
@@ -19,85 +28,43 @@ class SquatDrawings:
                               shin_angle: float
                               ):
         # Draw the image
-        cv2.putText(self.image, f"Camera Angle: {camera_angle}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2,
+        cv2.putText(self.image,
+                    f"Camera Angle: {camera_angle}",
+                    (50, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    COLORS["blue"],
+                    2,
                     cv2.LINE_AA)
 
-        # Draw hip marker
-        cv2.drawMarker(self.image,
-                       (int(hip[0] * self.width), int(hip[1] * self.height)),
-                       (0, 255, 0),
-                       markerType=cv2.MARKER_SQUARE,
-                       markerSize=10,
-                       thickness=2
-                       )
-        # Draw knee marker
-        cv2.drawMarker(self.image,
-                       (int(knee[0] * self.width),
-                        int(knee[1] * self.height)),
-                       (0, 255, 0),
-                       markerType=cv2.MARKER_SQUARE,
-                       markerSize=10,
-                       thickness=2
-                       )
-        # draw ankle marker
-        cv2.drawMarker(self.image,
-                       (int(ankle[0] * self.width),
-                        int(ankle[1] * self.height)),
-                       (0, 255, 0),
-                       markerType=cv2.MARKER_SQUARE,
-                       markerSize=10,
-                       thickness=2
-                       )
-        # draw shoulder marker
-        cv2.drawMarker(self.image,
-                       (int(shoulder[0] * self.width),
-                        int(shoulder[1] * self.height)),
-                       (0, 255, 0),
-                       markerType=cv2.MARKER_SQUARE,
-                       markerSize=10,
-                       thickness=2
-                       )
+        marker_lst = [hip, knee, ankle, shoulder]
+        for marker in marker_lst:
+            cv2.drawMarker(self.image,
+                           (marker[0], marker[1]),
+                           COLORS["red"],
+                           markerType=cv2.MARKER_SQUARE,
+                           markerSize=10,
+                           thickness=2
+                           )
 
         # Draw lines between the hip, knee, shoulder, and ankle
-        cv2.line(self.image, (int(hip[0] * self.width), int(hip[1] * self.height)),
-                 (int(knee[0] * self.width), int(knee[1] * self.height)), (0, 255, 0), 2)
+        cv2.line(self.image, (hip[0], hip[1]), (knee[0], knee[1]), COLORS["green"], 2)
 
-        cv2.line(self.image, (int(knee[0] * self.width), int(knee[1] * self.height)),
-                 (int(ankle[0] * self.width), int(ankle[1] * self.height)), (0, 255, 0), 2)
+        cv2.line(self.image, (knee[0], knee[1]), (ankle[0], ankle[1]), COLORS["green"], 2)
 
-        cv2.line(self.image, (int(shoulder[0] * self.width), int(shoulder[1] * self.height)),
-                 (int(hip[0] * self.width), int(hip[1] * self.height)), (0, 255, 0), 2)
+        cv2.line(self.image, (shoulder[0], shoulder[1]), (hip[0], hip[1]), COLORS["green"], 2)
 
-        # Add angle text to the respective markers
-        cv2.putText(self.image,
-                    f"Knee Angle: {int(knee_angle)} deg",
-                    (int(knee[0] * self.width + 10),
-                     int(knee[1] * self.height + 6)),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (0, 255, 0),
-                    2,
-                    cv2.LINE_AA)
-
-        cv2.putText(self.image,
-                    f"Hip Angle: {int(hip_angle)} deg",
-                    (int(hip[0] * self.width + 10),
-                     int(hip[1] * self.height + 6)),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (0, 255, 0),
-                    2,
-                    cv2.LINE_AA)
-
-        cv2.putText(self.image,
-                    f"Shin Angle: {int(shin_angle)} deg",
-                    (int(ankle[0] * self.width + 10),
-                     int(ankle[1] * self.height + 6)),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (0, 255, 0),
-                    2,
-                    cv2.LINE_AA)
+        joint_lst = [knee, hip, ankle]
+        for i, angle in enumerate([knee_angle, hip_angle, shin_angle]):
+            cv2.putText(self.image,
+                        f"{round(angle, 2)}deg",
+                        (joint_lst[i][0] + 10,
+                         joint_lst[i][1] + 6),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        1,
+                        COLORS["green"],
+                        2,
+                        cv2.LINE_AA)
 
     def draw_back_angle_squat(self,
                               camera_angle: str,

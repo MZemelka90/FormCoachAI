@@ -25,6 +25,13 @@ def calculate_three_point_angle(a: list, b: list, c: list) -> float:
 
 
 def calculate_two_point_angle(a, b):
+    """
+    Calculate the angle between two points
+
+    :param a: First point
+    :param b: Second point
+    :return: Angle
+    """
     # Differences
     delta_x = b[0] - a[0]
     delta_y = b[1] - a[1]
@@ -38,4 +45,7 @@ def calculate_two_point_angle(a, b):
 
 
 def calculate_distance(a, b):
+    """
+    Calculate the distance between two points.
+    """
     return abs(math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2))

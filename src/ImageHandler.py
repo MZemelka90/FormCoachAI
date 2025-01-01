@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 import mediapipe as mp
-from MovementPatterns import SquatPose
-from MovementDrawings import SquatDrawings
-from Calculations import calculate_three_point_angle
+from src.MovementPatterns import SquatPose
+from src.MovementDrawings import SquatDrawings
+from src.Calculations import calculate_three_point_angle
 
 
 class FrameHandler:

@@ -21,6 +21,8 @@ class SquatDrawings:
         # Calculate font scale and line thickness based on image size
         self.font_scale = min(self.width, self.height) / 1500
         self.line_thickness = int(min(self.width, self.height) / 500)
+        if self.line_thickness < 1:
+            self.line_thickness = 1
 
         self.header_text_x = 30
         self.header_text_y = int(self.font_scale * 50)

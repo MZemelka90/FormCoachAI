@@ -1,27 +1,42 @@
-import numpy as np
 import math
 
 
-def calculate_three_point_angle(a: list, b: list, c: list) -> float:
+def calculate_three_point_angle(a: tuple, b: tuple, c: tuple):
     """
-    Calculate the angle between three points.
+    Calculate the angle (in degrees) formed by the points A, B, and C.
+    The angle is at point B with line segments BA and BC.
 
-    :param a: First point
-    :param b: Midpoint
-    :param c: Endpoint
-    :return: Angle
+    Args:
+        a (tuple): Coordinates of point A (x1, y1)
+        b (tuple): Coordinates of point B (x2, y2)
+        c (tuple): Coordinates of point C (x3, y3)
+
+    Returns:
+        float: The angle in degrees.
     """
-    a = np.array(a)  # First point
-    b = np.array(b)  # Midpoint
-    c = np.array(c)  # Endpoint
+    # Calculate vectors BA and BC
+    ba = (a[0] - b[0], a[1] - b[1])
+    bc = (c[0] - b[0], c[1] - b[1])
 
-    radians = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(a[1] - b[1], a[0] - b[0])
-    angle = np.abs(radians * 180.0 / np.pi)
+    # Calculate the dot product and magnitudes of BA and BC
+    dot_product = ba[0] * bc[0] + ba[1] * bc[1]
+    magnitude_ba = math.sqrt(ba[0] ** 2 + ba[1] ** 2)
+    magnitude_bc = math.sqrt(bc[0] ** 2 + bc[1] ** 2)
 
-    if angle > 180.0:
-        angle = 360 - angle
+    if magnitude_ba == 0 or magnitude_bc == 0:
+        raise ValueError("One or both vectors have zero length; cannot determine angle.")
 
-    return angle
+    # Calculate the cosine of the angle
+    cos_theta = dot_product / (magnitude_ba * magnitude_bc)
+
+    # Clamp the value to avoid math domain errors due to floating-point precision
+    cos_theta = max(-1, min(1, cos_theta))
+
+    # Calculate the angle in radians and then convert to degrees
+    angle_radians = math.acos(cos_theta)
+    angle_degrees = math.degrees(angle_radians)
+
+    return angle_degrees
 
 
 def calculate_two_point_angle(a, b):
@@ -32,6 +47,9 @@ def calculate_two_point_angle(a, b):
     :param b: Second point
     :return: Angle
     """
+    if a[0] == b[0] and a[1] == b[1]:
+        return 0
+
     # Differences
     delta_x = b[0] - a[0]
     delta_y = b[1] - a[1]

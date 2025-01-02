@@ -3,7 +3,7 @@ import numpy as np
 import mediapipe as mp
 from src.MovementPatterns import SquatPose
 from src.MovementDrawings import SquatDrawings
-from src.Calculations import calculate_three_point_angle
+from src.Calculations import calculate_three_point_angle, calculate_two_point_angle
 
 
 class FrameHandler:
@@ -166,6 +166,26 @@ class FrameHandler:
                     )
 
                     frame = self.add_images_to_frame(frame, args)
+
+                elif video_angle == "Back Angle":
+                    squat_drawings = SquatDrawings(image=frame, height=self.height, width=self.width)
+                    hips = squat_pose.hips
+                    shoulders = squat_pose.shoulders
+                    hip_angle = calculate_two_point_angle(
+                        squat_pose.coordinates.left_hip,
+                        squat_pose.coordinates.right_hip
+                    )
+                    hip_shift_angle = calculate_two_point_angle(
+                        squat_pose.get_shoulder_midpoint(),
+                        squat_pose.get_hip_midpoint()
+                    )
+                    squat_drawings.draw_back_angle_squat(
+                        camera_angle=video_angle,
+                        hips=hips,
+                        shoulders=shoulders,
+                        hip_angle=hip_angle,
+                        hip_shift_angle=hip_shift_angle
+                    )
 
             cv2.imshow("FormCoachAI", frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):

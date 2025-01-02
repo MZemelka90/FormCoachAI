@@ -141,7 +141,7 @@ class SquatDrawings:
 
         cv2.putText(self.image,
                     f"Hip Shift Angle: {hip_shift_angle - 90} deg",
-                    (hip_middle[0] - 100, hip_middle[1] + 100),
+                    (shoulder_middle[0] - 100, shoulder_middle[1] + 100),
                     cv2.FONT_HERSHEY_SIMPLEX, self.font_scale, (0, 255, 0), self.line_thickness, cv2.LINE_AA)
         cv2.line(self.image, shoulder_middle, hip_middle, (0, 255, 0), 2)
 

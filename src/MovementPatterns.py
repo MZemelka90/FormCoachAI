@@ -187,3 +187,9 @@ class SquatPose:
                     self.coordinates.right_heel)
         else:
             raise ValueError("Invalid side")
+
+    def get_shoulder_midpoint(self) -> list[int]:
+        return self.coordinates.shoulder_midpoint
+
+    def get_hip_midpoint(self) -> list[int]:
+        return self.coordinates.hip_midpoint

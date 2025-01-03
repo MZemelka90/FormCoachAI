@@ -32,7 +32,7 @@ To use FormCoachAI, follow these steps:
 
 FormCoachAI is an open-source project, and we welcome contributions from the community. To contribute, follow these steps:
 
-1. Fork the repository: `git fork https://github.com/Codeium/formcoach-ai.git`
+1. Fork the repository: `git fork https://github.com/MZemelka90/FormCoachAI.git`
 2. Make changes to the codebase.
 3. Submit a pull request.
 

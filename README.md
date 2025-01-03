@@ -6,8 +6,7 @@ FormCoachAI is an intelligent video analysis tool designed to evaluate and impro
 
 * **Advanced Computer Vision**: FormCoachAI uses state-of-the-art computer vision techniques to accurately detect and track the movements of athletes in videos.
 * **Actionable Feedback**: FormCoachAI provides users with detailed, actionable feedback on their technique, highlighting areas for improvement and providing suggestions for correction.
-* **Personalized Coaching**: FormCoachAI uses machine learning algorithms to analyze user performance and provide personalized coaching recommendations.
-* **Multi-Platform Support**: FormCoachAI is designed to work on a variety of platforms, including desktop, mobile, and web.
+* **Squat Support**: FormCoachAI is specifically designed to analyze and improve the technique of squats, helping athletes achieve an optimal Squat. You can record yourself from a back or side angle.
 
 ## Installation
 

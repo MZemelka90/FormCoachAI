@@ -4,8 +4,8 @@ setup(
     name='formcoachai',
     version='0.1.0',
     description='FormCoachAI: A computer vision system for analyzing human movement patterns',
-    author='Maximilian Fuchs',
-    author_email='maximilian.fuchs@fau.de',
+    author='Marc Zemelka',
+    author_email='marc.zemelka@web.de',
     url='https://github.com/MZemelka90/FormCoachAI',
     packages=['formcoachai'],
     install_requires=[

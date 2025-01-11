@@ -161,7 +161,6 @@ class FrameHandler:
         if circles is not None:
             # Convert circle parameters to integers
             circles = np.round(circles[0, :]).astype(int)
-            cv2.circle(frame, (circles[0][0], circles[0][1]), circles[0][2], (0, 255, 0), 2)
 
             barbell_coords = (circles[0][0], circles[0][1])
             return barbell_coords
@@ -187,7 +186,7 @@ class FrameHandler:
                 continue
             landmarks = results.pose_landmarks.landmark
             squat_pose = SquatPose(landmarks, self.width, self.height)
-            video_angle = squat_pose.check_visibility(0.2)
+            video_angle = squat_pose.check_visibility(0.3)
 
             if video_angle == "Side Angle":
                 filmed_side = squat_pose.check_which_side_is_visible()
@@ -197,10 +196,8 @@ class FrameHandler:
                 hip_angle = calculate_three_point_angle(side_coords[3], side_coords[0], side_coords[1])
                 shin_angle = calculate_three_point_angle(side_coords[1], side_coords[2], side_coords[4])
 
-                # bar_path.append((int(side_coords[3][0] * 0.3), int(side_coords[3][1] * 0.3)))
                 bar_coords = self.get_barbell_coordinates(frame)
                 if bar_coords:
-                    cv2.circle(frame, (int(bar_coords[0] / 3), int(bar_coords[1] / 3)), 10, (0, 0, 255), -1)
                     bar_path.append((int(bar_coords[0] / 3), int(bar_coords[1] / 3)))
                 args = (
                     video_angle, side_coords[0], side_coords[1], side_coords[2],
